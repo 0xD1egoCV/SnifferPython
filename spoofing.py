@@ -4,8 +4,18 @@ class spoofing:
 		self.ip_origen = ip_origen
 		self.ip_destino = ip_destino
 
-def crear(origin, destiny,pro):
-	res = IP(src=origin, dst= destiny)/pro()
+def crear(origin, destiny,protocolo):
+	if protocolo == 1:
+		res = IP(src=origin, dst= destiny)/TCP()
+		print("packete TCP creado ")
+	elif protocolo == 2:
+		res = IP(src=origin, dst= destiny)/ICMP()
+		print("packete ICMP creado ")
+	elif protocolo == 3:
+		res = IP(src=origin, dst= destiny)/UDP()
+		print("packete UDP creado ")
+	else : print("opcion invalida")
+	
 	return res
 	#packete = spoofing(ip_or, ip_des)
    # packete = IP(src=ip_or, dst=ip_des)/TCP()
@@ -13,8 +23,12 @@ def mostrar(aux):
 	print("IP de origen: ", aux.src)
 	print("IP destino: ", aux.dst)
 
-def enviar():
-	print("funciona2")
+def enviar(packete):
+	#el loop es el bucle, inter es la frecuencia de encvio en segundos
+	#send(packet, loop =1 , inter= 0.1)
+	send(packete)
+	print("Paquete enviado")
+	
 
 def nada():
 	print("Opcion invalida")
@@ -44,19 +58,15 @@ while flag == True:
 		ip_or = input("Ingrese IP origen >> ")
 		ip_des = input("Ingrese IP destino >>")
 		showProtocol()
-		protocolo = input("Seleccione el protocolo: ")
-		pro = prot(protocolo)
-		aux = crear(ip_or, ip_des, pro)
+		protocolo = int(input("Seleccione el protocolo: "))
+		#pro = prot(protocolo)
+		aux = crear(ip_or, ip_des, protocolo)
 		#print(aux.src)
 		
 	elif opcion == 2:
 		mostrar(aux)
-		#print(aux.src)
-		#print(aux.dst)
-		flag = False
 	elif opcion == 3:
-		enviar()
-		flag =False
+		enviar(aux)
 	else : nada()
 
 
