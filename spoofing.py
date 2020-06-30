@@ -7,6 +7,7 @@ class spoofing:
 def crear(origin, destiny,protocolo):
 	if protocolo == 1:
 		res = IP(src=origin, dst= destiny)/TCP()
+		
 		print("packete TCP creado ")
 	elif protocolo == 2:
 		res = IP(src=origin, dst= destiny)/ICMP()
