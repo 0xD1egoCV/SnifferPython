@@ -13,9 +13,9 @@ sniffer = sniff(count=1)
 #sniffer.pdfdump()
 res = sniffer
 #ipi= res[0:20]
-auxi = res.hexdump()
+#auxi = res.hexdump()
 
-ip = unpack('!BBHHHBBH4s4s',bytes(auxi))
+ip = unpack('!BBHHHBBH4s4s',bytes(res))
 Print("version: ", ip)
 print(sniffer.show())
 print("***************************************************")
