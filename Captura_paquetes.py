@@ -14,7 +14,7 @@ def whatflag(flags):
     return "Divisible"
 
 # recibimos 10 paquetes
-while contador <= 10:
+while contador <=10:
   packet = s.recvfrom(65535)
   packet = packet[0]
 
@@ -54,40 +54,32 @@ while contador <= 10:
   # ahora para la parte de TCP
   info_tcp = packet[longitud_iph:longitud_iph+20]
   cabecera_tcp = unpack('!HHLLBBHHH',info_tcp)
-  
-
-
-
-
-
-
-
-  '''
   puerto_orig = cabecera_tcp[0]
-  print("dat "+ str(puerto_orig))
-  puerto_orig = cabecera_tcp[1]
-  print("dat "+ str(puerto_orig))
-  puerto_orig = cabecera_tcp[2]
-  print("dat "+ str(puerto_orig))
-  puerto_orig = cabecera_tcp[3]
-  print("dat "+ str(puerto_orig))
-  puerto_orig = cabecera_tcp[4]
-  print("dat "+ str(puerto_orig))
-  puerto_orig = cabecera_tcp[5]
-  print("dat "+ str(puerto_orig))
-  puerto_orig = cabecera_tcp[6]
-  print("dat "+ str(puerto_orig))
-  puerto_orig = cabecera_tcp[7]
-  print("dat "+ str(puerto_orig))
-  puerto_orig = cabecera_tcp[8]
-  print("dat "+ str(puerto_orig))
-  '''
+  puerto_dest = cabecera_tcp[1]
+  num_seq = cabecera_tcp[2]
+  ack_num = cabecera_tcp[3]
+  data_offset = cabecera_tcp[4]
+  flagsTCP = cabecera_tcp[5]
+  win_size = cabecera_tcp[6]
+  checksumTCP = cabecera_tcp[7]
+  longitud_tcph = data_offset >> 4
+  urg_p = cabecera_tcp[8]
+  print('Puerto Origen:  '+ str(puerto_orig))
+  print('Puerto Destino: '+ str(puerto_dest))
+  print('Numero Secuencia:  '+ str(num_seq))
+  print('Acknowledgment: '+ str(ack_num))
+  print('Data offset: '+ str(data_offset))
+  print('Longitud cabecera TCP: '+ str(longitud_tcph)+ ' es decir '+ str(longitud_tcph*32//8) + ' bytes' )
+  print('Flags de TCP: '+ str(flagsTCP))
+  print('Window Size: '+ str(win_size))
+  print('Checksum: ' + str(checksumTCP))
+  print('Urgent Pointer:'+str(urg_p))
+  
+  # Datos recividos
+  longitud_cab = longitud_iph + longitud_tcph *4
+  longitud_datos = len(packet) - longitud_cab
+  datos = packet[longitud_cab:]
+  print('DATOS: ',(datos))
 
 
-
-
-  contador = contador + 1 
-
-
-
-
+  contador = contador + 1
