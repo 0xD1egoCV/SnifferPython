@@ -14,7 +14,7 @@ def whatflag(flags):
     return "Divisible"
 
 # recibimos 10 paquetes
-while contador <=10:
+while contador <=100:
   packet = s.recvfrom(65535)
   packet = packet[0]
 
@@ -43,7 +43,7 @@ while contador <=10:
   print('TOS: ' + str(tos))                       #2
   print('IP Total Length: '+ str(longitud_total)+' es decir: '+ str(longitud_total*32//8)+ ' bytes') #3
   print('ID: '+ str(ip_id))                            #4
-  print('Flags :' + str(flags)) +" "+ whatflag(flags)                      #5
+  #print('Flags :' + str(flags)) +" "+ whatflag(flags)                      #5
   print('TTL: ' + str(ttl))                       #6
   print('Protocolo: ' + str(protocolo))           #7
   print('Cheksum: '+ str(checksum))               #8
