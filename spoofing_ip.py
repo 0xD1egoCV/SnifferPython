@@ -1,3 +1,4 @@
+#NOTA: funciona con python 3.7 y 3.8
 from scapy.all import *
 class spoofing:
 	def __init__(self, ip_origen, ip_destino):
@@ -18,16 +19,12 @@ def crear(origin, destiny,protocolo):
 	else : print("opcion invalida")
 	
 	return res
-	#packete = spoofing(ip_or, ip_des)
-   # packete = IP(src=ip_or, dst=ip_des)/TCP()
 def mostrar(aux):
 	print("IP de origen: ", aux.src)
 	print("IP destino: ", aux.dst)
 
 def enviar(packete):
-	#el loop es el bucle, inter es la frecuencia de encvio en segundos
-	#send(packet, loop =1 , inter= 0.1)
-	payload = "CONNECT"
+	payload = input("Ingrese carga util >>")
 	aux = packete/payload
 	send(aux)
 	print("Paquete enviado")
@@ -53,6 +50,8 @@ menu = """
     1.-Crear paquete IP
     2.-Ver datos del paquete creado
     3.-Enviar paquete"""
+
+
 flag = True
 while flag == True:
 	print(menu)
@@ -62,23 +61,10 @@ while flag == True:
 		ip_des = input("Ingrese IP destino >>")
 		showProtocol()
 		protocolo = int(input("Seleccione el protocolo: "))
-		#pro = prot(protocolo)
 		aux = crear(ip_or, ip_des, protocolo)
-		#print(aux.src)
 		
 	elif opcion == 2:
 		mostrar(aux)
 	elif opcion == 3:
 		enviar(aux)
 	else : nada()
-
-
-
-
-
-
-#ip_or = input("Ingrese IP origen")
-#ip_des = input("Ingrese IP destino")
-#packet = spoofing(ip_or,ip_des)
-#print(packet.ip_origen)
-#print(packet.ip_destino)

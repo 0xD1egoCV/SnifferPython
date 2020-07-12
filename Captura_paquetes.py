@@ -1,3 +1,4 @@
+# python version 3.7 y 3.8
 import socket, sys
 from struct import*
 
@@ -6,14 +7,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
 
 contador = 1
 
-
-def whatflag(flags):
-  if flags == 16384:
-    return "No Divisible"
-  else: 
-    return "Divisible"
-
-# recibimos 10 paquetes
+# recibimos n paquetes
 while contador <=100:
   packet = s.recvfrom(65535)
   packet = packet[0]
@@ -36,21 +30,20 @@ while contador <=100:
   ip_origen =  socket.inet_ntoa(cabecera_ip[8])
   ip_destino = socket.inet_ntoa(cabecera_ip[9])
   print('##########################################################################################')
-  print("Datos recividos: ",packet)
-  
+  print('************ INFORMACION CABECERA IP **************')
   print('version de IP: ' + str(version))         #1
   print('IHL: ' +str(ihl)+ ' es decir: '+ str(ihl*32//8) + ' bytes')                       #1
   print('TOS: ' + str(tos))                       #2
   print('IP Total Length: '+ str(longitud_total)+' es decir: '+ str(longitud_total*32//8)+ ' bytes') #3
   print('ID: '+ str(ip_id))                            #4
-  #print('Flags :' + str(flags)) +" "+ whatflag(flags)                      #5
+  print('Flags :' + str(flags))                      #5
   print('TTL: ' + str(ttl))                       #6
   print('Protocolo: ' + str(protocolo))           #7
   print('Cheksum: '+ str(checksum))               #8
   print('IP origen: '+ str(ip_origen))            #9
   print('IP destino '+ str(ip_destino))           #10
   
-  print("**************INFORMACION DE TCP********************")
+  print("***********  INFORMACION DE TCP  ********************")
   # ahora para la parte de TCP
   info_tcp = packet[longitud_iph:longitud_iph+20]
   cabecera_tcp = unpack('!HHLLBBHHH',info_tcp)
@@ -79,7 +72,7 @@ while contador <=100:
   longitud_cab = longitud_iph + longitud_tcph *4
   longitud_datos = len(packet) - longitud_cab
   datos = packet[longitud_cab:]
-  print('DATOS: ',(datos))
+  print('DATOS RECIBIDOS: ',(datos))
 
 
   contador = contador + 1
